@@ -12,6 +12,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
@@ -30,6 +31,12 @@ class MyHomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(title),
+      ),
+      body: ListView.builder(
+        itemCount: 50,
+        itemBuilder: (BuildContext context, int index) {
+          return Text("Question" + ' ' + index.toString());
+        },
       ),
     );
   }
