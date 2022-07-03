@@ -21,6 +21,7 @@ class BadRequestException extends AppException {
 }
 
 //for token validation
+
 class UnauthorisedException extends AppException {
   UnauthorisedException([String? message])
       : super(message, "Unauthorised requested");

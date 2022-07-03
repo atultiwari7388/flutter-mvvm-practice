@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:mvvm_practice_app/utils/routes/routes.dart';
+import 'package:mvvm_practice_app/utils/routes/routes_name.routes.dart';
+import 'package:mvvm_practice_app/view/login/login_screen.login.view.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,28 +19,9 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
-    );
-  }
-}
-
-class MyHomePage extends StatelessWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
-
-  final String title;
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(title),
-      ),
-      body: ListView.builder(
-        itemCount: 50,
-        itemBuilder: (BuildContext context, int index) {
-          return Text("Question" + ' ' + index.toString());
-        },
-      ),
+      initialRoute: RoutesName.login,
+      onGenerateRoute: Routes.onGenerateRoutes,
+      home: const LoginScreen(),
     );
   }
 }
