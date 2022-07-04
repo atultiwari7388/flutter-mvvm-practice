@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
 import 'package:mvvm_practice_app/resources/components/round_button.components.resources.dart';
 import 'package:mvvm_practice_app/utils/app.utils.dart';
+import 'package:mvvm_practice_app/view_model/auth/auth.view_model.dart';
+import 'package:provider/provider.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({Key? key}) : super(key: key);
@@ -23,11 +25,14 @@ class _LoginViewState extends State<LoginView> {
     _emailController.dispose();
     _passwordController.dispose();
     _obsecurePassword.dispose();
+    emailFocusNode.dispose();
+    passwordFocusNode.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    final authView = Provider.of<AuthViewModel>(context);
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -79,6 +84,7 @@ class _LoginViewState extends State<LoginView> {
             SizedBox(height: Adaptive.h(10)),
             RoundButton(
               text: "Login",
+              loading: authView.loading,
               onPressed: () {
                 if (_emailController.text.isEmpty &&
                     _passwordController.text.isEmpty) {
@@ -88,10 +94,20 @@ class _LoginViewState extends State<LoginView> {
                   AppUtils.flushErrorMessage(
                       "Password must be at least 6 characters", context);
                 } else {
-                  print("hit api");
+                  Map data = {
+                    "email": _emailController.text,
+                    "password": _passwordController.text,
+                  };
+
+                  authView.loginUser(data, context);
                 }
               },
-            )
+            ),
+            SizedBox(height: Adaptive.h(16)),
+            InkWell(
+              onTap: () {},
+              child: const Text("Don't have an account? Sign up"),
+            ),
           ],
         ),
       ),
