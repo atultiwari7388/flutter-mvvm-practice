@@ -5,14 +5,16 @@ import 'package:mvvm_practice_app/utils/app.utils.dart';
 import 'package:mvvm_practice_app/view_model/auth/auth.view_model.dart';
 import 'package:provider/provider.dart';
 
-class LoginView extends StatefulWidget {
-  const LoginView({Key? key}) : super(key: key);
+import '../../../utils/routes/routes_name.routes.dart';
+
+class SignUpView extends StatefulWidget {
+  const SignUpView({Key? key}) : super(key: key);
 
   @override
-  State<LoginView> createState() => _LoginViewState();
+  State<SignUpView> createState() => _SignUpViewState();
 }
 
-class _LoginViewState extends State<LoginView> {
+class _SignUpViewState extends State<SignUpView> {
   final ValueNotifier<bool> _obsecurePassword = ValueNotifier<bool>(true);
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -39,6 +41,14 @@ class _LoginViewState extends State<LoginView> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            const Text(
+              "Sign Up",
+              style: TextStyle(
+                fontSize: 20.0,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(height: Adaptive.h(12)),
             TextFormField(
               controller: _emailController,
               keyboardType: TextInputType.emailAddress,
@@ -83,7 +93,7 @@ class _LoginViewState extends State<LoginView> {
             ),
             SizedBox(height: Adaptive.h(10)),
             RoundButton(
-              text: "Login",
+              text: "Sign Up",
               loading: authView.loading,
               onPressed: () {
                 if (_emailController.text.isEmpty &&
@@ -99,14 +109,14 @@ class _LoginViewState extends State<LoginView> {
                     "password": _passwordController.text,
                   };
 
-                  authView.loginUser(data, context);
+                  authView.registerUser(data, context);
                 }
               },
             ),
             SizedBox(height: Adaptive.h(16)),
             InkWell(
-              onTap: () {},
-              child: const Text("Don't have an account? Sign up"),
+              onTap: () => Navigator.pushNamed(context, RoutesName.login),
+              child: const Text("Already have an account? Login"),
             ),
           ],
         ),

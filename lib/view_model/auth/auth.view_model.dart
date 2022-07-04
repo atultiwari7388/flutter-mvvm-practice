@@ -15,7 +15,33 @@ class AuthViewModel with ChangeNotifier {
     notifyListeners();
   }
 
+  //register
+  Future<void> registerUser(dynamic data, BuildContext context) async {
+    setLoading(true);
+    _authRepo.registerUser(data).then((value) {
+      //success
+      AppUtils.flushSuccessMessage("Yay! successful", context);
+      setLoading(false);
+      Navigator.pushNamedAndRemoveUntil(
+        context,
+        RoutesName.home,
+        (route) => false,
+      );
+      if (kDebugMode) {
+        print(value.toString());
+      }
+    }).onError((error, stackTrace) {
+      //error
+      AppUtils.flushErrorMessage("user not found", context);
+      if (kDebugMode) {
+        print(error.toString());
+      }
+      setLoading(false);
+    });
+  }
+
   //handle api data
+  //login
   Future<void> loginUser(dynamic data, BuildContext context) async {
     setLoading(true);
     _authRepo.loginUser(data).then((value) {
